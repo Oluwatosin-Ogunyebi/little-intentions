@@ -1,0 +1,11 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { applyAction, initialWorld, offlinePlan, outcome, validatePlan } from '../src/simulation';
+
+test('clarifies a missing outcome without moving',()=>{const w=initialWorld();const p=offlinePlan('Please deliver something',w);assert.equal(p.actions.length,0);assert.match(p.message,/which item and who/);assert.deepEqual(validatePlan(w,p),w);});
+test('practice planner asks instead of ignoring a negation or multiple choices',()=>{for(const text of ['Do not take tea to Mira','Take tea instead of cake to Mira','tea to Mira and Rowan'])assert.equal(offlinePlan(text,initialWorld()).actions.length,0);});
+test('complete delivery succeeds from actual state',()=>{const w=initialWorld();const p=offlinePlan('Take tea to Mira',w);const result=validatePlan(w,p);assert.equal(outcome(result),true);assert.equal(result.events.length,3);assert.equal(outcome(w),false);});
+test('wrong delivery is recorded but does not satisfy mission',()=>{const result=validatePlan(initialWorld(),offlinePlan('Take cake to Rowan',initialWorld()));assert.equal(outcome(result),false);assert.match(result.events.at(-1)!,/cake to rowan/);});
+test('unknown targets, stale plans, and invalid preconditions do not mutate original',()=>{const w=initialWorld(), before=structuredClone(w);assert.throws(()=>validatePlan(w,{message:'',revision:1,actions:[]}));assert.throws(()=>validatePlan(w,{message:'',revision:0,actions:[{type:'move_to',target:'nowhere' as any}]}));assert.throws(()=>applyAction(w,{type:'deliver',recipient:'mira'}));assert.deepEqual(w,before);});
+test('a blocked route rejects the whole plan without applying the pickup',()=>{const w=initialWorld();w.blockedEdges=['crossroads:mira'];const before=structuredClone(w);assert.throws(()=>validatePlan(w,offlinePlan('tea to mira',w)),/blocked/);assert.deepEqual(w,before);});
+test('rewind returns the exact initial state while keeping attempt evidence',()=>{const start=initialWorld();const completed=validatePlan(start,offlinePlan('tea to mira',start));const record=structuredClone(completed.events);const rewind=initialWorld();assert.deepEqual(rewind,start);assert.notDeepEqual(rewind.events,record);});

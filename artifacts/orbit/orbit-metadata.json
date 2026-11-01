@@ -1,0 +1,29 @@
+{
+  "units": "metres",
+  "runtime_up": "+Y",
+  "runtime_forward": "+Z",
+  "root": "ground contact",
+  "rest_height_m": 1.1773406267166138,
+  "mesh_count": 33,
+  "triangles": 18150,
+  "materials": 6,
+  "bones": 15,
+  "animations": {
+    "idle": 3.2,
+    "walk": 0.8,
+    "ask_wait": 2.4,
+    "interact": 1.6,
+    "celebrate": 1.8
+  },
+  "walk": "in place; game controls translation",
+  "source": "original Orbit sprite sheet; custom authored geometry",
+  "runtime_meshes": 1,
+  "runtime_primitives": 6,
+  "dimensions_m": {
+    "width": 0.62,
+    "height": 1.1773406267166138,
+    "depth": 0.475
+  },
+  "walk_nominal_speed_m_s": 0.375,
+  "walk_swing_lift_m": 0.05
+}

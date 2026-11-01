@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {transcribe} from '../server/transcription';
+import {VoiceCapture} from '../src/voice';
+
+test('transcription sends supported audio to the selected API without persisting it',async()=>{let request:any;const fake:typeof fetch=async(_url,init)=>{request=init;return new Response(JSON.stringify({text:'Tea to Mira'}));};const result=await transcribe(new Uint8Array(300),'audio/webm;codecs=opus','test',fake);assert.equal(result,'Tea to Mira');assert.equal(request.body.get('model'),'gpt-transcribe');assert.equal(request.body.get('file').name,'instruction.webm');});
+test('transcription rejects empty or unsupported audio before network',async()=>{let called=false;const fake:typeof fetch=async()=>{called=true;return new Response();};await assert.rejects(()=>transcribe(new Uint8Array(1),'audio/webm','test',fake));await assert.rejects(()=>transcribe(new Uint8Array(300),'audio/ogg','test',fake));assert.equal(called,false);});
+test('microphone denial leaves the guided fallback available',async()=>{const original=Object.getOwnPropertyDescriptor(globalThis,'navigator');Object.defineProperty(globalThis,'navigator',{configurable:true,value:{mediaDevices:{getUserMedia:async()=>{throw Error('Microphone denied');}}}});const old=(globalThis as any).MediaRecorder;(globalThis as any).MediaRecorder=class {static isTypeSupported(){return true;}};try{const v=new VoiceCapture();await v.start();assert.equal(v.state.phase,'error');assert.match(v.state.message,/denied/);v.cancel();assert.equal(v.state.phase,'idle');}finally{if(original)Object.defineProperty(globalThis,'navigator',original);else delete (globalThis as any).navigator;(globalThis as any).MediaRecorder=old;}});
+import {transcribeDetailed} from '../server/transcription';
+test('transcription preserves API-reported duration units',async()=>{const fake:typeof fetch=async()=>new Response(JSON.stringify({text:'Tea',usage:{type:'duration',seconds:2}}));const result=await transcribeDetailed(new Uint8Array(300),'audio/wav','test',fake);assert.deepEqual(result.usage,{type:'duration',seconds:2});});

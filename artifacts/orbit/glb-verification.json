@@ -1,0 +1,117 @@
+{
+  "file": "C:\\Users\\oluwa\\Downloads\\Devay\\public\\assets\\orbit\\orbit.glb",
+  "bytes": 846312,
+  "imported_meshes": 1,
+  "bones": 15,
+  "animations": {
+    "ask_wait_Orbit": {
+      "duration_seconds": 2.4,
+      "samples": 25,
+      "foot_height_ranges_m": {
+        "L": [
+          -0.0,
+          -0.0
+        ],
+        "R": [
+          -0.0,
+          -0.0
+        ]
+      },
+      "all_vertices_finite": true,
+      "min_z": -1.3192845926823793e-07,
+      "max_z": 1.208584189414978
+    },
+    "celebrate_Orbit": {
+      "duration_seconds": 1.8,
+      "samples": 25,
+      "foot_height_ranges_m": {
+        "L": [
+          -0.0,
+          0.0658
+        ],
+        "R": [
+          -0.0,
+          0.0658
+        ]
+      },
+      "all_vertices_finite": true,
+      "min_z": -1.3192845926823793e-07,
+      "max_z": 1.2525336742401123
+    },
+    "idle_Orbit": {
+      "duration_seconds": 3.2,
+      "samples": 25,
+      "foot_height_ranges_m": {
+        "L": [
+          -0.00032,
+          0.00033
+        ],
+        "R": [
+          -0.00032,
+          0.00033
+        ]
+      },
+      "all_vertices_finite": true,
+      "min_z": -0.00032172384089790285,
+      "max_z": 1.180532455444336
+    },
+    "interact_Orbit": {
+      "duration_seconds": 1.6,
+      "samples": 25,
+      "foot_height_ranges_m": {
+        "L": [
+          -0.00013,
+          -0.0
+        ],
+        "R": [
+          -0.00013,
+          -0.0
+        ]
+      },
+      "all_vertices_finite": true,
+      "min_z": -0.00012511627573985606,
+      "max_z": 1.1773407459259033
+    },
+    "walk_Orbit": {
+      "duration_seconds": 0.8,
+      "samples": 25,
+      "foot_height_ranges_m": {
+        "L": [
+          -0.0,
+          0.05
+        ],
+        "R": [
+          -0.0,
+          0.05
+        ]
+      },
+      "all_vertices_finite": true,
+      "min_z": -2.189104861827218e-07,
+      "max_z": 1.1572452783584595,
+      "max_planted_foot_ground_error_m": 2.189104861827218e-07
+    }
+  },
+  "sha256": "ee0912f7cf99a81f922b6f538436612d53daaab604f0658daf593e7de32ff6ad",
+  "original_source_hash_unchanged": true,
+  "gltf": {
+    "meshes": 1,
+    "primitives": 6,
+    "materials": 6,
+    "skins": 1,
+    "triangles": 18150,
+    "animations": [
+      "ask_wait",
+      "celebrate",
+      "idle",
+      "interact",
+      "walk"
+    ],
+    "clip_durations_seconds": {
+      "ask_wait": 2.4,
+      "celebrate": 1.8,
+      "idle": 3.2,
+      "interact": 1.6,
+      "walk": 0.8
+    }
+  }
+}
